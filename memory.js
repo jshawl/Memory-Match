@@ -23,6 +23,8 @@ var imgCards=[ "https://lh3.googleusercontent.com/ZZPdzvlpK9r_Df9C3M7j1rNRi7hhHR
 var flipCard=[];
 var flippedCards = 0;
 var counter =0
+var choice = prompt("What game difficulty do you want? \n Easy \n Medium \n Hard");
+choice = choice.toLowerCase();
 
 function shuffleCards(){
   Array.prototype.shuffle = function()
@@ -39,6 +41,7 @@ function shuffleCards(){
   imgCards.shuffle();
 }
 
+
 function makeBoard(){
   shuffleCards();
   var board = '';
@@ -51,41 +54,139 @@ function makeBoard(){
   document.getElementsByTagName("p")[0].innerHTML = "flipped cards: "+ counter;
   $("img").hide();
 }
-makeBoard();
 
-$(".card").click(function(){
-  if ((flipCard.length < 2) && ($(this).children("img").hasClass("up")) === false) {
-    $(this).children("img").css("background-color","white");
-    $(this).children("img").show();
-    $(this).children("img").addClass("up");
-    if (flipCard.length === 0){
-      flipCard.push($(this).children("img").attr("src"));
-      counter++;
-      document.getElementsByTagName("p")[0].innerHTML = "flipped cards: "+ counter;
-    }
-    else if (flipCard.length === 1) {
+if(choice === "hard"){
+  counter = 50;
+  do {
+    makeBoard();
+    $(".card").click(function(){
+      if ((flipCard.length < 2) && ($(this).children("img").hasClass("up")) === false) {
+        $(this).children("img").css("background-color","white");
+        $(this).children("img").show();
+        $(this).children("img").addClass("up");
+        if (flipCard.length === 0){
+          flipCard.push($(this).children("img").attr("src"));
+          counter--;
+          document.getElementsByTagName("p")[0].innerHTML = "flips left: "+ counter;
+        }
+        else if (flipCard.length === 1) {
+            flipCard.push($(this).children("img").attr("src"));
+            counter--;
+            document.getElementsByTagName("p")[0].innerHTML = "flips left: "+ counter;
+            if(flipCard[0]===flipCard[1]){
+              $(".card").children("img[src='"+flipCard[1]+"']").addClass("match");
+              flippedCards += 2;
+              flipCard =[];
+              if(flippedCards === imgCards.length){
+                document.getElementsByTagName("p")[0].innerHTML = "You Completed the Game. The amount of flips you have left is "+ counter;
+              }
+            }
+            else{
+              setTimeout(function() {
+              $("img").not(".match").hide();
+              $("img").not(".match").removeClass("up");
+              }, 500);
+              flipCard =[];
+            }
+         }
+       }
+
+    });
+
+  } while (counter > 0);
+  if (counter === 0) {
+    document.getElementsByTagName("p")[0].innerHTML = "flips left: "+ counter + "\n Game Over!";
+  }
+
+}
+else if(choice === "medium"){
+  counter = 75;
+  do {
+    makeBoard();
+    $(".card").click(function(){
+      if ((flipCard.length < 2) && ($(this).children("img").hasClass("up")) === false) {
+        $(this).children("img").css("background-color","white");
+        $(this).children("img").show();
+        $(this).children("img").addClass("up");
+        if (flipCard.length === 0){
+          flipCard.push($(this).children("img").attr("src"));
+          counter--;
+          document.getElementsByTagName("p")[0].innerHTML = "flips left: "+ counter;
+        }
+        else if (flipCard.length === 1) {
+            flipCard.push($(this).children("img").attr("src"));
+            counter--;
+            document.getElementsByTagName("p")[0].innerHTML = "flips left: "+ counter;
+            if(flipCard[0]===flipCard[1]){
+              $(".card").children("img[src='"+flipCard[1]+"']").addClass("match");
+              flippedCards += 2;
+              flipCard =[];
+              if(flippedCards === imgCards.length){
+                document.getElementsByTagName("p")[0].innerHTML = "You Completed the Game. The amount of flips you have left is "+ counter;
+              }
+            }
+            else{
+              setTimeout(function() {
+              $("img").not(".match").hide();
+              $("img").not(".match").removeClass("up");
+              }, 500);
+              flipCard =[];
+            }
+         }
+       }
+
+    });
+
+  } while (counter > 0);
+  if (counter === 0) {
+    document.getElementsByTagName("p")[0].innerHTML = "flips left: "+ counter + "\n Game Over!";
+  }
+}
+else if (choice === "easy") {
+  makeBoard();
+  $(".card").click(function(){
+    if ((flipCard.length < 2) && ($(this).children("img").hasClass("up")) === false) {
+      $(this).children("img").css("background-color","white");
+      $(this).children("img").show();
+      $(this).children("img").addClass("up");
+      if (flipCard.length === 0){
         flipCard.push($(this).children("img").attr("src"));
         counter++;
         document.getElementsByTagName("p")[0].innerHTML = "flipped cards: "+ counter;
-        if(flipCard[0]===flipCard[1]){
-          $(".card").children("img[src='"+flipCard[1]+"']").addClass("match");
-          flippedCards += 2;
-          flipCard =[];
-          if(flippedCards === imgCards.length){
-            document.getElementsByTagName("p")[0].innerHTML = "You Completed the Game. Your flip count is "+ counter;
+      }
+      else if (flipCard.length === 1) {
+          flipCard.push($(this).children("img").attr("src"));
+          counter++;
+          document.getElementsByTagName("p")[0].innerHTML = "flipped cards: "+ counter;
+          if(flipCard[0]===flipCard[1]){
+            $(".card").children("img[src='"+flipCard[1]+"']").addClass("match");
+            flippedCards += 2;
+            flipCard =[];
+            if(flippedCards === imgCards.length){
+              document.getElementsByTagName("p")[0].innerHTML = "You Completed the Game. Your flip count is "+ counter;
+            }
           }
-        }
-        else{
-          setTimeout(function() {
-          $("img").not(".match").hide();
-          $("img").not(".match").removeClass("up");
-          }, 500);
-          flipCard =[];
-        }
+          else{
+            setTimeout(function() {
+            $("img").not(".match").hide();
+            $("img").not(".match").removeClass("up");
+            }, 500);
+            flipCard =[];
+          }
+       }
      }
-   }
 
-});
+  });
+
+}
+
+
+
+
+
+
+
+
 
 
 
