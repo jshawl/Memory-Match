@@ -22,7 +22,7 @@ var imgCards=[ "https://lh3.googleusercontent.com/ZZPdzvlpK9r_Df9C3M7j1rNRi7hhHR
   ];
 var flipCard=[];
 var flippedCards = 0;
-var counter =0
+
 var choice = prompt("What game difficulty do you want? \n Easy \n Medium \n Hard");
 choice = choice.toLowerCase();
 
@@ -57,9 +57,9 @@ function makeBoard(){
 
 if(choice === "hard"){
   counter = 50;
-  do {
-    makeBoard();
-    $(".card").click(function(){
+  makeBoard();
+  $(".card").click(function(){
+    if(counter > 0) {
       if ((flipCard.length < 2) && ($(this).children("img").hasClass("up")) === false) {
         $(this).children("img").css("background-color","white");
         $(this).children("img").show();
@@ -90,20 +90,17 @@ if(choice === "hard"){
             }
          }
        }
-
-    });
-
-  } while (counter > 0);
-  if (counter === 0) {
+  }
+  else if (counter === 0) {
     document.getElementsByTagName("p")[0].innerHTML = "flips left: "+ counter + "\n Game Over!";
   }
-
-}
+  });
+  }
 else if(choice === "medium"){
-  counter = 75;
-  do {
-    makeBoard();
-    $(".card").click(function(){
+  counter = 74;
+  makeBoard();
+  $(".card").click(function(){
+    if(counter > 0) {
       if ((flipCard.length < 2) && ($(this).children("img").hasClass("up")) === false) {
         $(this).children("img").css("background-color","white");
         $(this).children("img").show();
@@ -134,16 +131,14 @@ else if(choice === "medium"){
             }
          }
        }
-
-    });
-
-  } while (counter > 0);
-  if (counter === 0) {
+  }
+  else if (counter === 0) {
     document.getElementsByTagName("p")[0].innerHTML = "flips left: "+ counter + "\n Game Over!";
   }
+ });
 }
 else if (choice === "easy") {
-  makeBoard();
+  counter =0;                                                                                                            makeBoard();
   $(".card").click(function(){
     if ((flipCard.length < 2) && ($(this).children("img").hasClass("up")) === false) {
       $(this).children("img").css("background-color","white");
@@ -175,9 +170,7 @@ else if (choice === "easy") {
           }
        }
      }
-
   });
-
 }
 
 
