@@ -89,7 +89,9 @@ if(choice === "hard"){
               flipCard =[];
             }
          }
+
        }
+
   }
   else if (counter === 0) {
     document.getElementsByTagName("p")[0].innerHTML = "flips left: "+ counter + "\n Game Over!";
